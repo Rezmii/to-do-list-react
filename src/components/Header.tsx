@@ -1,12 +1,16 @@
 import { HStack, Text, VStack } from "@chakra-ui/react";
-import { CiSquarePlus } from "react-icons/ci";
+import FormButton from "./FormButton";
 
-const Header = () => {
+interface Props {
+  onSubmit: (title: string, emoji: string) => void;
+}
+
+const Header = ({ onSubmit }: Props) => {
   return (
     <HStack justifyContent="space-between">
       <Text fontSize="4xl">Welcome</Text>
       <VStack alignItems="flex-end">
-        <CiSquarePlus size={60} onClick={() => console.log("clicked")} />
+        <FormButton onSubmit={(title, emoji) => onSubmit(title, emoji)} />
         <Text marginTop={-4} fontSize="sm">
           Add a new set
         </Text>

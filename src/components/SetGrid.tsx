@@ -1,7 +1,5 @@
 import { SimpleGrid } from "@chakra-ui/react";
 import SetCard from "./SetCard";
-import { useContext } from "react";
-import { SetsContext } from "../App";
 import { Set } from "../App";
 
 interface Props {
@@ -12,7 +10,7 @@ const SetGrid = ({ sets }: Props) => {
   return (
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 4, xl: 4 }} spacing={5}>
       {sets.map((set) => (
-        <SetCard set={set}></SetCard>
+        <SetCard key={set.title} set={set}></SetCard>
       ))}
     </SimpleGrid>
   );

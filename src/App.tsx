@@ -14,10 +14,10 @@ export const SetsContext = createContext(1);
 
 function App() {
   const [sets, setSets] = useState<Set[]>([
-    { icon: "💪", title: "Fitness", progress: "3/5" },
-    { icon: "💪", title: "Fitness", progress: "3/5" },
-    { icon: "💪", title: "Fitness", progress: "3/5" },
-    { icon: "💪", title: "Fitness", progress: "3/5" },
+    { icon: "💪", title: "Fitness1", progress: "3/5" },
+    { icon: "💪", title: "Fitness2", progress: "3/5" },
+    { icon: "💪", title: "Fitness3", progress: "3/5" },
+    { icon: "💪", title: "Fitness4", progress: "3/5" },
   ]);
 
   return (
@@ -34,7 +34,11 @@ function App() {
         marginY="3em"
       >
         <GridItem area="header">
-          <Header />
+          <Header
+            onSubmit={(title, icon) =>
+              setSets([...sets, { title, icon, progress: "0/5" }])
+            }
+          />
         </GridItem>
         <GridItem area="main">
           <SetGrid sets={sets} />
