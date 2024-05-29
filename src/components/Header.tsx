@@ -1,9 +1,9 @@
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { CiSquarePlus } from "react-icons/ci";
 
 const Header = () => {
   return (
-    <HStack margin={10} justifyContent="space-between">
+    <HStack justifyContent="space-between">
       <Text fontSize="4xl">Welcome</Text>
       <VStack alignItems="flex-end">
         <CiSquarePlus size={60} onClick={() => console.log("clicked")} />
