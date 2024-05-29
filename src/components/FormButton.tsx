@@ -10,8 +10,9 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
+import EmojiPickerModal from "./EmojiPickerModal";
 
 interface Props {
   onSubmit: (title: string, emoji: string) => void;
@@ -20,12 +21,12 @@ interface Props {
 const FormButton = ({ onSubmit }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const titleRef = useRef<HTMLInputElement>(null);
-  const emojiRef = useRef<HTMLInputElement>(null);
+  const [selectedEmoji, setSelectedEmoji] = useState<string | null>(null);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     let title = titleRef.current?.value ?? "";
-    let emoji = emojiRef.current?.value ?? "";
+    let emoji = selectedEmoji ?? "";
     onSubmit(title, emoji);
     onClose();
   };
@@ -42,7 +43,10 @@ const FormButton = ({ onSubmit }: Props) => {
           <form onSubmit={handleSubmit}>
             <ModalBody>
               <Input ref={titleRef} placeholder="add title" marginBottom={5} />
-              <Input ref={emojiRef} placeholder="add emoji" />
+              <EmojiPickerModal
+                onEmojiClick={(emoji) => setSelectedEmoji(emoji)}
+                emoji={selectedEmoji}
+              />
             </ModalBody>
 
             <ModalFooter>
