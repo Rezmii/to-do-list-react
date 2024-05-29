@@ -1,9 +1,16 @@
-import { HStack, Text } from "@chakra-ui/react";
+import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { CiSquarePlus } from "react-icons/ci";
 
 const Header = () => {
   return (
-    <HStack margin={5}>
-      <Text fontSize="3xl">Welcome</Text>
+    <HStack margin={10} justifyContent="space-between">
+      <Text fontSize="4xl">Welcome</Text>
+      <VStack alignItems="flex-end">
+        <CiSquarePlus size={60} onClick={() => console.log("clicked")} />
+        <Text marginTop={-4} fontSize="sm">
+          Add a new set
+        </Text>
+      </VStack>
     </HStack>
   );
 };

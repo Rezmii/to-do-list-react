@@ -4,7 +4,7 @@ import Header from "./components/Header";
 
 function App() {
   return (
-    <Box height="90vh" width="90vw" borderRadius="25px" bg="lightgray">
+    <Box height="85vh" width="85vw" borderRadius="25px" bg="lightgray">
       <Header />
     </Box>
   );
