@@ -1,15 +1,20 @@
 import { Card, CardBody, CardHeader, Text, VStack } from "@chakra-ui/react";
+import { Set } from "../App";
 
-const SetCard = () => {
+interface Props {
+  set: Set;
+}
+
+const SetCard = ({ set }: Props) => {
   return (
     <Card>
       <CardHeader textAlign="right">
-        <Text fontSize="3xl">💪</Text>
+        <Text fontSize="3xl">{set.icon}</Text>
       </CardHeader>
       <CardBody>
         <VStack alignItems="flex-start">
-          <Text fontWeight="bold">Fitness</Text>
-          <Text>3/5 done</Text>
+          <Text fontWeight="bold">{set.title}</Text>
+          <Text>{set.progress} done</Text>
         </VStack>
       </CardBody>
     </Card>
