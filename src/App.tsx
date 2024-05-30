@@ -47,8 +47,13 @@ function App() {
     );
   };
 
-  const deleteTask = (taskId: number) => {
+  const deleteTask = (taskId: number, setId: number) => {
     setTasks(tasks.filter((task) => task.taskId !== taskId));
+    setSets(
+      sets.map((set) =>
+        set.id === setId ? { ...set, tasks: set.tasks - 1 } : set
+      )
+    );
   };
 
   return (
@@ -103,7 +108,9 @@ function App() {
                 </GridItem>
                 <GridItem area="main">
                   <TaskGrid
-                    onDeleteButton={(id) => deleteTask(id)}
+                    onDeleteButton={(taskId, setId) =>
+                      deleteTask(taskId, setId)
+                    }
                     tasks={tasks}
                   />
                 </GridItem>

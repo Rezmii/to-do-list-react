@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 interface Props {
   tasks: Task[];
-  onDeleteButton: (id: number) => void;
+  onDeleteButton: (taskId: number, setId: number) => void;
 }
 
 const TaskGrid = ({ tasks, onDeleteButton }: Props) => {

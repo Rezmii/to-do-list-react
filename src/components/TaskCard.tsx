@@ -10,7 +10,7 @@ import { useState } from "react";
 interface Props {
   task: Task;
   onMarkButton: () => void;
-  onDeleteButton: (id: number) => void;
+  onDeleteButton: (taskId: number, setId: number) => void;
 }
 
 const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
@@ -36,7 +36,7 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
             <Button
               colorScheme="red"
               padding={1}
-              onClick={() => onDeleteButton(task.taskId)}
+              onClick={() => onDeleteButton(task.taskId, task.setId)}
             >
               <MdDelete size={20} />
             </Button>
