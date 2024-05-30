@@ -1,4 +1,5 @@
 import { Card, CardBody, CardHeader, Text, VStack } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import { Set } from "../App";
 
 interface Props {
@@ -6,8 +7,13 @@ interface Props {
 }
 
 const SetCard = ({ set }: Props) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/set/${set.title}`);
+  };
+
   return (
-    <Card>
+    <Card onClick={handleClick} cursor="pointer">
       <CardHeader textAlign="right">
         <Text fontSize="3xl">{set.icon}</Text>
       </CardHeader>

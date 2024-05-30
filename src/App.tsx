@@ -3,6 +3,8 @@ import "./App.css";
 import Header from "./components/Header";
 import SetGrid from "./components/SetGrid";
 import { createContext, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import SetDetails from "./components/SetDetails";
 
 export interface Set {
   icon: string;
@@ -33,16 +35,26 @@ function App() {
         gap="3em"
         marginY="3em"
       >
-        <GridItem area="header">
-          <Header
-            onSubmit={(title, icon) =>
-              setSets([...sets, { title, icon, progress: "0/5" }])
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <GridItem area="header">
+                  <Header
+                    onSubmit={(title, icon) =>
+                      setSets([...sets, { title, icon, progress: "0/0" }])
+                    }
+                  />
+                </GridItem>
+                <GridItem area="main">
+                  <SetGrid sets={sets} />
+                </GridItem>
+              </>
             }
           />
-        </GridItem>
-        <GridItem area="main">
-          <SetGrid sets={sets} />
-        </GridItem>
+          <Route path="/set/:title" element={<SetDetails sets={sets} />} />
+        </Routes>
       </Grid>
     </>
   );
