@@ -5,7 +5,7 @@ import SetGrid from "./components/SetGrid";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import TaskGrid from "./components/TaskGrid";
-import SetDetailsHeader from "./components/SetDetailsHeader";
+import TasksHeader from "./components/TasksHeader";
 
 export interface Set {
   id: number;
@@ -83,7 +83,7 @@ function App() {
             element={
               <>
                 <GridItem area="header">
-                  <SetDetailsHeader
+                  <TasksHeader
                     onSubmit={(id, title) => {
                       setTasks([...tasks, { id, title }]);
                       increaseTasks(id);

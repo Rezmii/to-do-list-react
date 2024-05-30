@@ -32,7 +32,7 @@ interface Props {
   onSubmit: (id: number, title: string) => void;
 }
 
-const DetailsFormButton = ({ onSubmit }: Props) => {
+const TasksFormButton = ({ onSubmit }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { id } = useParams<{ id: string | undefined }>();
@@ -93,4 +93,4 @@ const DetailsFormButton = ({ onSubmit }: Props) => {
   );
 };
 
-export default DetailsFormButton;
+export default TasksFormButton;

@@ -2,14 +2,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Set } from "../App";
 import { Box, Button, HStack, Text } from "@chakra-ui/react";
 import { IoArrowBack } from "react-icons/io5";
-import DetailsFormButton from "./DetailsFormButton";
+import TasksFormButton from "./TasksFormButton";
 
 interface SetDetailsProps {
   sets: Set[];
   onSubmit: (id: number, title: string) => void;
 }
 
-const SetDetailsHeader = ({ sets, onSubmit }: SetDetailsProps) => {
+const TasksHeader = ({ sets, onSubmit }: SetDetailsProps) => {
   const { id } = useParams<{ id: string }>();
   const setId = id ? parseInt(id) : undefined;
   const set = setId ? sets.find((s) => s.id === setId) : undefined;
@@ -36,7 +36,7 @@ const SetDetailsHeader = ({ sets, onSubmit }: SetDetailsProps) => {
         )}
       </Box>
       <HStack>
-        <DetailsFormButton onSubmit={(id, title) => onSubmit(id, title)} />
+        <TasksFormButton onSubmit={(id, title) => onSubmit(id, title)} />
         <Button
           leftIcon={<IoArrowBack />}
           variant="solid"
@@ -49,4 +49,4 @@ const SetDetailsHeader = ({ sets, onSubmit }: SetDetailsProps) => {
   );
 };
 
-export default SetDetailsHeader;
+export default TasksHeader;
