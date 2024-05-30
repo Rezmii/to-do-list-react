@@ -1,17 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Set } from "../App";
-import { Box, Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Text } from "@chakra-ui/react";
 import { IoArrowBack } from "react-icons/io5";
 import DetailsFormButton from "./DetailsFormButton";
 
 interface SetDetailsProps {
   sets: Set[];
-  onSubmit: (title: string) => void;
+  onSubmit: (id: number, title: string) => void;
 }
 
 const SetDetailsHeader = ({ sets, onSubmit }: SetDetailsProps) => {
-  const { title } = useParams<{ title: string }>();
-  const set = sets.find((s) => s.title === title);
+  const { id } = useParams<{ id: string }>();
+  const setId = id ? parseInt(id) : undefined;
+  const set = setId ? sets.find((s) => s.id === setId) : undefined;
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/`);
@@ -31,7 +32,7 @@ const SetDetailsHeader = ({ sets, onSubmit }: SetDetailsProps) => {
         <Text>{set.progress} done</Text>
       </Box>
       <HStack>
-        <DetailsFormButton onSubmit={(title) => onSubmit(title)} />
+        <DetailsFormButton onSubmit={(id, title) => onSubmit(id, title)} />
         <Button
           leftIcon={<IoArrowBack />}
           variant="solid"

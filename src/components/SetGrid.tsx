@@ -9,8 +9,8 @@ interface Props {
 const SetGrid = ({ sets }: Props) => {
   return (
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 4, xl: 4 }} spacing={5}>
-      {sets.map((set) => (
-        <SetCard key={set.title} set={set}></SetCard>
+      {sets.map((set, i) => (
+        <SetCard key={i} set={set}></SetCard>
       ))}
     </SimpleGrid>
   );

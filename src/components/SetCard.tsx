@@ -9,7 +9,7 @@ interface Props {
 const SetCard = ({ set }: Props) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/set/${set.title}`);
+    navigate(`/set/${set.id}`);
   };
 
   return (

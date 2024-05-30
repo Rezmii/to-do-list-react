@@ -16,6 +16,7 @@ import { FaPlus } from "react-icons/fa6";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 const schema = z.object({
   title: z.string().min(3, { message: "Title must be at least 3 characters." }),
@@ -28,11 +29,14 @@ const capitalizeFirstLetter = (string: String) => {
 };
 
 interface Props {
-  onSubmit: (title: string) => void;
+  onSubmit: (id: number, title: string) => void;
 }
 
 const DetailsFormButton = ({ onSubmit }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { id } = useParams<{ id: string | undefined }>();
+  const setId = id ? parseInt(id) : undefined;
 
   const {
     register,
@@ -44,9 +48,11 @@ const DetailsFormButton = ({ onSubmit }: Props) => {
   const onSubmitForm = (data: FieldValues) => {
     let title = capitalizeFirstLetter(data.title);
 
-    onSubmit(title);
-    reset();
-    onClose();
+    if (setId !== undefined) {
+      onSubmit(setId, title);
+      reset();
+      onClose();
+    }
   };
 
   return (

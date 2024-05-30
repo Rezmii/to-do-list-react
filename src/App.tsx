@@ -4,15 +4,18 @@ import Header from "./components/Header";
 import SetGrid from "./components/SetGrid";
 import { createContext, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import SetDetails from "./components/SetDetailsHeader";
+import TaskGrid from "./components/TaskGrid";
+import SetDetailsHeader from "./components/SetDetailsHeader";
 
 export interface Set {
+  id: number;
   icon: string;
   title: string;
   progress: string;
 }
 
 export interface Task {
+  id: number;
   title: string;
 }
 
@@ -20,18 +23,20 @@ export const SetsContext = createContext(1);
 
 function App() {
   const [sets, setSets] = useState<Set[]>([
-    { icon: "💪", title: "Fitness1", progress: "3/5" },
-    { icon: "💪", title: "Fitness2", progress: "3/5" },
-    { icon: "💪", title: "Fitness3", progress: "3/5" },
-    { icon: "💪", title: "Fitness4", progress: "3/5" },
+    { id: 1, icon: "💪", title: "Fitness1", progress: "3/5" },
+    { id: 2, icon: "💪", title: "Fitness2", progress: "3/5" },
+    { id: 3, icon: "💪", title: "Fitness3", progress: "3/5" },
+    { id: 4, icon: "💪", title: "Fitness4", progress: "3/5" },
   ]);
 
   const [tasks, setTasks] = useState<Task[]>([
-    { title: "Fitness1" },
-    { title: "Fitness2" },
-    { title: "Fitness3" },
-    { title: "Fitness4" },
+    { id: 1, title: "Fitness1" },
+    { id: 2, title: "Fitness1" },
+    { id: 1, title: "Fitness1" },
+    { id: 1, title: "Fitness1" },
   ]);
+
+  const maxSetId = Math.max(...sets.map((set) => set.id));
 
   return (
     <>
@@ -54,7 +59,10 @@ function App() {
                 <GridItem area="header">
                   <Header
                     onSubmit={(title, icon) =>
-                      setSets([...sets, { title, icon, progress: "0/0" }])
+                      setSets([
+                        ...sets,
+                        { id: maxSetId + 1, title, icon, progress: "0/0" },
+                      ])
                     }
                   />
                 </GridItem>
@@ -65,14 +73,21 @@ function App() {
             }
           />
           <Route
-            path="/set/:title"
+            path="/set/:id"
             element={
-              <GridItem area="header">
-                <SetDetails
-                  onSubmit={(title) => setTasks([...tasks, { title }])}
-                  sets={sets}
-                />
-              </GridItem>
+              <>
+                <GridItem area="header">
+                  <SetDetailsHeader
+                    onSubmit={(id, title) =>
+                      setTasks([...tasks, { id, title }])
+                    }
+                    sets={sets}
+                  />
+                </GridItem>
+                <GridItem area="main">
+                  <TaskGrid tasks={tasks} />
+                </GridItem>
+              </>
             }
           />
         </Routes>
