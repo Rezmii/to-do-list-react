@@ -10,7 +10,7 @@ import { useState } from "react";
 interface Props {
   task: Task;
   onMarkButton: () => void;
-  onDeleteButton: () => void;
+  onDeleteButton: (id: number) => void;
 }
 
 const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
@@ -33,7 +33,11 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
                 <IoIosCheckmarkCircleOutline size={27} />
               )}
             </Button>
-            <Button colorScheme="red" padding={1} onClick={onDeleteButton}>
+            <Button
+              colorScheme="red"
+              padding={1}
+              onClick={() => onDeleteButton(task.taskId)}
+            >
               <MdDelete size={20} />
             </Button>
           </Box>

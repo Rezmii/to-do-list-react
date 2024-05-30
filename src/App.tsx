@@ -15,7 +15,8 @@ export interface Set {
 }
 
 export interface Task {
-  id: number;
+  taskId: number;
+  setId: number;
   title: string;
 }
 
@@ -28,13 +29,15 @@ function App() {
   ]);
 
   const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: "Fitness1" },
-    { id: 2, title: "Fitness1" },
-    { id: 1, title: "Fitness1" },
-    { id: 1, title: "Fitness1" },
+    { taskId: 1, setId: 1, title: "Fitness1" },
+    { taskId: 2, setId: 1, title: "Fitness1" },
+    { taskId: 3, setId: 1, title: "Fitness1" },
+    { taskId: 4, setId: 2, title: "Fitness2" },
   ]);
 
   const maxSetId = Math.max(...sets.map((set) => set.id));
+  const maxTaskId =
+    tasks.length > 0 ? Math.max(...tasks.map((task) => task.taskId)) : 0;
 
   const increaseTasks = (id: number) => {
     setSets(
@@ -42,6 +45,10 @@ function App() {
         set.id === id ? { ...set, tasks: set.tasks + 1 } : set
       )
     );
+  };
+
+  const deleteTask = (taskId: number) => {
+    setTasks(tasks.filter((task) => task.taskId !== taskId));
   };
 
   return (
@@ -85,14 +92,20 @@ function App() {
                 <GridItem area="header">
                   <TasksHeader
                     onSubmit={(id, title) => {
-                      setTasks([...tasks, { id, title }]);
+                      setTasks([
+                        ...tasks,
+                        { taskId: maxTaskId + 1, setId: id, title },
+                      ]);
                       increaseTasks(id);
                     }}
                     sets={sets}
                   />
                 </GridItem>
                 <GridItem area="main">
-                  <TaskGrid tasks={tasks} />
+                  <TaskGrid
+                    onDeleteButton={(id) => deleteTask(id)}
+                    tasks={tasks}
+                  />
                 </GridItem>
               </>
             }
