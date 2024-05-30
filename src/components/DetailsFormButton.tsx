@@ -10,10 +10,9 @@ import {
   Button,
   Input,
   Text,
+  VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { CiSquarePlus } from "react-icons/ci";
-import EmojiPickerModal from "./EmojiPickerModal";
+import { FaPlus } from "react-icons/fa6";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
@@ -29,13 +28,11 @@ const capitalizeFirstLetter = (string: String) => {
 };
 
 interface Props {
-  onSubmit: (title: string, emoji: string) => void;
+  onSubmit: (title: string) => void;
 }
 
-const FormButton = ({ onSubmit }: Props) => {
+const DetailsFormButton = ({ onSubmit }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedEmoji, setSelectedEmoji] = useState<string | null>(null);
-  const [emojiError, setEmojiError] = useState<string | null>(null);
 
   const {
     register,
@@ -46,29 +43,24 @@ const FormButton = ({ onSubmit }: Props) => {
 
   const onSubmitForm = (data: FieldValues) => {
     let title = capitalizeFirstLetter(data.title);
-    let emoji = selectedEmoji ?? "";
-    if (!selectedEmoji) {
-      setEmojiError("Please select an emoji.");
-      return;
-    } else {
-      setEmojiError(null);
-    }
-    onSubmit(title, emoji);
+
+    onSubmit(title);
     reset();
     onClose();
   };
 
   return (
     <>
-      <CiSquarePlus size={60} onClick={onOpen} />
-      <Text marginTop={-4} fontSize="sm">
-        Add a new set
-      </Text>
+      <VStack>
+        <Button onClick={onOpen} fontSize={20}>
+          <FaPlus />
+        </Button>
+      </VStack>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add a new set</ModalHeader>
+          <ModalHeader>Add a new task</ModalHeader>
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmitForm)}>
             <ModalBody>
@@ -78,11 +70,6 @@ const FormButton = ({ onSubmit }: Props) => {
                 type="text"
               />
               {errors.title && <Text color="red">{errors.title.message}</Text>}
-              <EmojiPickerModal
-                onEmojiClick={(emoji) => setSelectedEmoji(emoji)}
-                emoji={selectedEmoji}
-              />
-              {emojiError && <Text color="red">{emojiError}</Text>}
             </ModalBody>
 
             <ModalFooter>
@@ -100,4 +87,4 @@ const FormButton = ({ onSubmit }: Props) => {
   );
 };
 
-export default FormButton;
+export default DetailsFormButton;

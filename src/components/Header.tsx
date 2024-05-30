@@ -11,9 +11,6 @@ const Header = ({ onSubmit }: Props) => {
       <Text fontSize="4xl">Welcome</Text>
       <VStack alignItems="flex-end">
         <FormButton onSubmit={(title, emoji) => onSubmit(title, emoji)} />
-        <Text marginTop={-4} fontSize="sm">
-          Add a new set
-        </Text>
       </VStack>
     </HStack>
   );

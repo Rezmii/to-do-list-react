@@ -4,12 +4,16 @@ import Header from "./components/Header";
 import SetGrid from "./components/SetGrid";
 import { createContext, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import SetDetails from "./components/SetDetails";
+import SetDetails from "./components/SetDetailsHeader";
 
 export interface Set {
   icon: string;
   title: string;
   progress: string;
+}
+
+export interface Task {
+  title: string;
 }
 
 export const SetsContext = createContext(1);
@@ -20,6 +24,13 @@ function App() {
     { icon: "💪", title: "Fitness2", progress: "3/5" },
     { icon: "💪", title: "Fitness3", progress: "3/5" },
     { icon: "💪", title: "Fitness4", progress: "3/5" },
+  ]);
+
+  const [tasks, setTasks] = useState<Task[]>([
+    { title: "Fitness1" },
+    { title: "Fitness2" },
+    { title: "Fitness3" },
+    { title: "Fitness4" },
   ]);
 
   return (
@@ -53,7 +64,17 @@ function App() {
               </>
             }
           />
-          <Route path="/set/:title" element={<SetDetails sets={sets} />} />
+          <Route
+            path="/set/:title"
+            element={
+              <GridItem area="header">
+                <SetDetails
+                  onSubmit={(title) => setTasks([...tasks, { title }])}
+                  sets={sets}
+                />
+              </GridItem>
+            }
+          />
         </Routes>
       </Grid>
     </>
