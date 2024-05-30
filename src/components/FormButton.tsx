@@ -9,10 +9,24 @@ import {
   useDisclosure,
   Button,
   Input,
+  Text,
 } from "@chakra-ui/react";
-import { FormEvent, useRef, useState } from "react";
+import { useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
 import EmojiPickerModal from "./EmojiPickerModal";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldValues, useForm } from "react-hook-form";
+
+const schema = z.object({
+  title: z.string().min(3, { message: "Title must be at least 3 characters." }),
+});
+
+type FormData = z.infer<typeof schema>;
+
+const capitalizeFirstLetter = (string: String) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 interface Props {
   onSubmit: (title: string, emoji: string) => void;
@@ -20,14 +34,27 @@ interface Props {
 
 const FormButton = ({ onSubmit }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const titleRef = useRef<HTMLInputElement>(null);
   const [selectedEmoji, setSelectedEmoji] = useState<string | null>(null);
+  const [emojiError, setEmojiError] = useState<string | null>(null);
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    let title = titleRef.current?.value ?? "";
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  const onSubmitForm = (data: FieldValues) => {
+    let title = capitalizeFirstLetter(data.title);
     let emoji = selectedEmoji ?? "";
+    if (!selectedEmoji) {
+      setEmojiError("Please select an emoji.");
+      return;
+    } else {
+      setEmojiError(null);
+    }
     onSubmit(title, emoji);
+    reset();
     onClose();
   };
 
@@ -40,13 +67,19 @@ const FormButton = ({ onSubmit }: Props) => {
         <ModalContent>
           <ModalHeader>Add a new set</ModalHeader>
           <ModalCloseButton />
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmitForm)}>
             <ModalBody>
-              <Input ref={titleRef} placeholder="add title" marginBottom={5} />
+              <Input
+                {...register("title")}
+                placeholder="add title"
+                type="text"
+              />
+              {errors.title && <Text color="red">{errors.title.message}</Text>}
               <EmojiPickerModal
                 onEmojiClick={(emoji) => setSelectedEmoji(emoji)}
                 emoji={selectedEmoji}
               />
+              {emojiError && <Text color="red">{emojiError}</Text>}
             </ModalBody>
 
             <ModalFooter>
