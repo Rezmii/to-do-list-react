@@ -6,7 +6,7 @@ interface Props {
   task: Task;
 }
 
-const SetCard = ({ task }: Props) => {
+const TaskCard = ({ task }: Props) => {
   return (
     <Card>
       <CardBody>
@@ -16,4 +16,4 @@ const SetCard = ({ task }: Props) => {
   );
 };
 
-export default SetCard;
+export default TaskCard;
