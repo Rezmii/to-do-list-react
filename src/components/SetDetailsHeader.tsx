@@ -29,7 +29,11 @@ const SetDetailsHeader = ({ sets, onSubmit }: SetDetailsProps) => {
           <Text fontSize="3xl">{set.icon}</Text>
           <Text fontSize="3xl">{set.title}</Text>
         </HStack>
-        <Text>{set.progress} done</Text>
+        {set.tasks === 1 ? (
+          <Text>{set.tasks} task</Text>
+        ) : (
+          <Text>{set.tasks} tasks</Text>
+        )}
       </Box>
       <HStack>
         <DetailsFormButton onSubmit={(id, title) => onSubmit(id, title)} />

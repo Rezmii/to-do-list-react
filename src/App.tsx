@@ -2,7 +2,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import "./App.css";
 import Header from "./components/Header";
 import SetGrid from "./components/SetGrid";
-import { createContext, useState } from "react";
+import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import TaskGrid from "./components/TaskGrid";
 import SetDetailsHeader from "./components/SetDetailsHeader";
@@ -11,7 +11,7 @@ export interface Set {
   id: number;
   icon: string;
   title: string;
-  progress: string;
+  tasks: number;
 }
 
 export interface Task {
@@ -19,14 +19,12 @@ export interface Task {
   title: string;
 }
 
-export const SetsContext = createContext(1);
-
 function App() {
   const [sets, setSets] = useState<Set[]>([
-    { id: 1, icon: "💪", title: "Fitness1", progress: "3/5" },
-    { id: 2, icon: "💪", title: "Fitness2", progress: "3/5" },
-    { id: 3, icon: "💪", title: "Fitness3", progress: "3/5" },
-    { id: 4, icon: "💪", title: "Fitness4", progress: "3/5" },
+    { id: 1, icon: "💪", title: "Fitness1", tasks: 3 },
+    { id: 2, icon: "💪", title: "Fitness2", tasks: 1 },
+    { id: 3, icon: "💪", title: "Fitness3", tasks: 0 },
+    { id: 4, icon: "💪", title: "Fitness4", tasks: 0 },
   ]);
 
   const [tasks, setTasks] = useState<Task[]>([
@@ -37,6 +35,14 @@ function App() {
   ]);
 
   const maxSetId = Math.max(...sets.map((set) => set.id));
+
+  const increaseTasks = (id: number) => {
+    setSets(
+      sets.map((set) =>
+        set.id === id ? { ...set, tasks: set.tasks + 1 } : set
+      )
+    );
+  };
 
   return (
     <>
@@ -61,7 +67,7 @@ function App() {
                     onSubmit={(title, icon) =>
                       setSets([
                         ...sets,
-                        { id: maxSetId + 1, title, icon, progress: "0/0" },
+                        { id: maxSetId + 1, title, icon, tasks: 0 },
                       ])
                     }
                   />
@@ -78,9 +84,10 @@ function App() {
               <>
                 <GridItem area="header">
                   <SetDetailsHeader
-                    onSubmit={(id, title) =>
-                      setTasks([...tasks, { id, title }])
-                    }
+                    onSubmit={(id, title) => {
+                      setTasks([...tasks, { id, title }]);
+                      increaseTasks(id);
+                    }}
                     sets={sets}
                   />
                 </GridItem>

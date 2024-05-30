@@ -20,7 +20,11 @@ const SetCard = ({ set }: Props) => {
       <CardBody>
         <VStack alignItems="flex-start">
           <Text fontWeight="bold">{set.title}</Text>
-          <Text>{set.progress} done</Text>
+          {set.tasks === 1 ? (
+            <Text>{set.tasks} task</Text>
+          ) : (
+            <Text>{set.tasks} tasks</Text>
+          )}
         </VStack>
       </CardBody>
     </Card>
