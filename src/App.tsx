@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./components/Header";
 import SetGrid from "./components/SetGrid";
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import TaskGrid from "./components/TaskGrid";
 import TasksHeader from "./components/TasksHeader";
 
@@ -21,6 +21,7 @@ export interface Task {
 }
 
 function App() {
+  const navigate = useNavigate();
   const [sets, setSets] = useState<Set[]>([
     { id: 1, icon: "💪", title: "Fitness1", tasks: 3 },
     { id: 2, icon: "💪", title: "Fitness2", tasks: 1 },
@@ -54,6 +55,17 @@ function App() {
         set.id === setId ? { ...set, tasks: set.tasks - 1 } : set
       )
     );
+  };
+
+  console.log(tasks);
+  console.log(sets);
+
+  const deleteSet = (id: number) => {
+    setSets(sets.filter((set) => set.id !== id));
+    setTasks(tasks.filter((task) => task.setId !== id));
+    navigate(`/`);
+    console.log(tasks);
+    console.log(sets);
   };
 
   return (
@@ -104,6 +116,7 @@ function App() {
                       increaseTasks(id);
                     }}
                     sets={sets}
+                    onDeleteButton={(id) => deleteSet(id)}
                   />
                 </GridItem>
                 <GridItem area="main">

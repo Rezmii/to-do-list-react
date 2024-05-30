@@ -2,14 +2,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Set } from "../App";
 import { Box, Button, HStack, Text } from "@chakra-ui/react";
 import { IoArrowBack } from "react-icons/io5";
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 import TasksFormButton from "./TasksFormButton";
 
 interface SetDetailsProps {
   sets: Set[];
   onSubmit: (id: number, title: string) => void;
+  onDeleteButton: (id: number) => void;
 }
 
-const TasksHeader = ({ sets, onSubmit }: SetDetailsProps) => {
+const TasksHeader = ({ sets, onSubmit, onDeleteButton }: SetDetailsProps) => {
   const { id } = useParams<{ id: string }>();
   const setId = id ? parseInt(id) : undefined;
   const set = setId ? sets.find((s) => s.id === setId) : undefined;
@@ -37,6 +39,12 @@ const TasksHeader = ({ sets, onSubmit }: SetDetailsProps) => {
       </Box>
       <HStack>
         <TasksFormButton onSubmit={(id, title) => onSubmit(id, title)} />
+        <Button
+          leftIcon={<IoIosRemoveCircleOutline size={20} />}
+          onClick={() => onDeleteButton(set.id)}
+        >
+          Delete set
+        </Button>
         <Button
           leftIcon={<IoArrowBack />}
           variant="solid"
