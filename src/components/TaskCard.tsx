@@ -1,4 +1,15 @@
-import { Card, CardBody, Text, Button, HStack, Box } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Text,
+  Button,
+  HStack,
+  Box,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+} from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import {
   IoIosCheckmarkCircle,
@@ -20,34 +31,62 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
     setMarkButton(task.done);
   }, [task.done]);
 
-  const handleMarkButton = () => {
+  const handleMarkButton = (event: React.MouseEvent) => {
+    event.stopPropagation();
     const newMarkButtonState = !markButton;
     setMarkButton(newMarkButtonState);
     onMarkButton(task.taskId, newMarkButtonState);
   };
 
+  const handleDeleteButton = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onDeleteButton(task.taskId, task.setId);
+  };
+
   return (
     <Card>
       <CardBody paddingX={3} paddingY={4}>
-        <HStack justifyContent="space-between">
-          <Text fontWeight="bold">{task.title}</Text>
-          <Box>
-            <Button padding="2" marginRight={2} onClick={handleMarkButton}>
-              {markButton ? (
-                <IoIosCheckmarkCircle size={27} />
-              ) : (
-                <IoIosCheckmarkCircleOutline size={27} />
-              )}
-            </Button>
-            <Button
-              colorScheme="red"
-              padding={1}
-              onClick={() => onDeleteButton(task.taskId, task.setId)}
-            >
-              <MdDelete size={20} />
-            </Button>
-          </Box>
-        </HStack>
+        <Accordion allowToggle>
+          <AccordionItem sx={{ border: "none" }}>
+            <AccordionButton>
+              <HStack width="100%" justifyContent="space-between">
+                <Box>
+                  <Text fontWeight="bold">{task.title}</Text>
+                </Box>
+
+                <Box display="flex" alignItems="center">
+                  <Button
+                    size="sm"
+                    padding={2}
+                    marginRight={2}
+                    onClick={handleMarkButton}
+                  >
+                    {markButton ? (
+                      <IoIosCheckmarkCircle size={20} />
+                    ) : (
+                      <IoIosCheckmarkCircleOutline size={20} />
+                    )}
+                  </Button>
+                  <Button
+                    colorScheme="red"
+                    padding={2}
+                    size="sm"
+                    onClick={handleDeleteButton}
+                  >
+                    <MdDelete size={16} />
+                  </Button>
+                </Box>
+              </HStack>
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text fontSize="sm" fontWeight="bold" marginTop={2}>
+                31.05.2024
+              </Text>
+              <hr />
+              <Text fontSize="sm">{task.description}</Text>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
       </CardBody>
     </Card>
   );

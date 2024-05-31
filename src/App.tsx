@@ -20,6 +20,7 @@ export interface Task {
   setId: number;
   title: string;
   done: boolean;
+  description: string;
 }
 
 function App() {
@@ -32,10 +33,34 @@ function App() {
   ]);
 
   const [tasks, setTasks] = useState<Task[]>([
-    { taskId: 1, setId: 1, title: "Fitness1", done: false },
-    { taskId: 2, setId: 1, title: "Fitness1", done: false },
-    { taskId: 3, setId: 1, title: "Fitness1", done: false },
-    { taskId: 4, setId: 2, title: "Fitness2", done: false },
+    {
+      taskId: 1,
+      setId: 1,
+      title: "Fitness1",
+      done: false,
+      description: "sdadjaosd",
+    },
+    {
+      taskId: 2,
+      setId: 1,
+      title: "Fitness1",
+      done: false,
+      description: "sdadjaosd",
+    },
+    {
+      taskId: 3,
+      setId: 1,
+      title: "Fitness1",
+      done: false,
+      description: "sdadjaosd",
+    },
+    {
+      taskId: 4,
+      setId: 2,
+      title: "Fitness2",
+      done: false,
+      description: "Sranie!",
+    },
   ]);
 
   const maxSetId = Math.max(...sets.map((set) => set.id));
@@ -147,6 +172,7 @@ function App() {
                           setId: id,
                           title,
                           done: false,
+                          description: "xd",
                         },
                       ]);
                       increaseTasks(id);
