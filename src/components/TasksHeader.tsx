@@ -31,11 +31,12 @@ const TasksHeader = ({ sets, onSubmit, onDeleteButton }: SetDetailsProps) => {
           <Text fontSize="3xl">{set.icon}</Text>
           <Text fontSize="3xl">{set.title}</Text>
         </HStack>
-        {set.tasks === 1 ? (
-          <Text>{set.tasks} task</Text>
-        ) : (
-          <Text>{set.tasks} tasks</Text>
-        )}
+        <Text>
+          {set.tasksDone}/
+          {set.tasks === 1
+            ? `${set.tasks} task done`
+            : `${set.tasks} tasks done`}
+        </Text>
       </Box>
       <HStack>
         <TasksFormButton onSubmit={(id, title) => onSubmit(id, title)} />

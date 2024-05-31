@@ -12,28 +12,30 @@ export interface Set {
   icon: string;
   title: string;
   tasks: number;
+  tasksDone: number;
 }
 
 export interface Task {
   taskId: number;
   setId: number;
   title: string;
+  done: boolean;
 }
 
 function App() {
   const navigate = useNavigate();
   const [sets, setSets] = useState<Set[]>([
-    { id: 1, icon: "💪", title: "Fitness1", tasks: 3 },
-    { id: 2, icon: "💪", title: "Fitness2", tasks: 1 },
-    { id: 3, icon: "💪", title: "Fitness3", tasks: 0 },
-    { id: 4, icon: "💪", title: "Fitness4", tasks: 0 },
+    { id: 1, icon: "💪", title: "Fitness1", tasks: 3, tasksDone: 0 },
+    { id: 2, icon: "💪", title: "Fitness2", tasks: 1, tasksDone: 0 },
+    { id: 3, icon: "💪", title: "Fitness3", tasks: 0, tasksDone: 0 },
+    { id: 4, icon: "💪", title: "Fitness4", tasks: 0, tasksDone: 0 },
   ]);
 
   const [tasks, setTasks] = useState<Task[]>([
-    { taskId: 1, setId: 1, title: "Fitness1" },
-    { taskId: 2, setId: 1, title: "Fitness1" },
-    { taskId: 3, setId: 1, title: "Fitness1" },
-    { taskId: 4, setId: 2, title: "Fitness2" },
+    { taskId: 1, setId: 1, title: "Fitness1", done: false },
+    { taskId: 2, setId: 1, title: "Fitness1", done: false },
+    { taskId: 3, setId: 1, title: "Fitness1", done: false },
+    { taskId: 4, setId: 2, title: "Fitness2", done: false },
   ]);
 
   const maxSetId = Math.max(...sets.map((set) => set.id));
@@ -49,23 +51,46 @@ function App() {
   };
 
   const deleteTask = (taskId: number, setId: number) => {
+    const taskToDelete = tasks.find((task) => task.taskId === taskId);
     setTasks(tasks.filter((task) => task.taskId !== taskId));
     setSets(
       sets.map((set) =>
-        set.id === setId ? { ...set, tasks: set.tasks - 1 } : set
+        set.id === setId
+          ? {
+              ...set,
+              tasks: set.tasks - 1,
+              tasksDone: taskToDelete?.done ? set.tasksDone - 1 : set.tasksDone,
+            }
+          : set
       )
     );
   };
 
-  console.log(tasks);
-  console.log(sets);
+  const markTask = (taskId: number, markButton: boolean) => {
+    setTasks(
+      tasks.map((task) =>
+        task.taskId === taskId ? { ...task, done: markButton } : task
+      )
+    );
+    const task = tasks.find((task) => task.taskId === taskId);
+    if (task) {
+      setSets(
+        sets.map((set) =>
+          set.id === task.setId
+            ? {
+                ...set,
+                tasksDone: markButton ? set.tasksDone + 1 : set.tasksDone - 1,
+              }
+            : set
+        )
+      );
+    }
+  };
 
   const deleteSet = (id: number) => {
     setSets(sets.filter((set) => set.id !== id));
     setTasks(tasks.filter((task) => task.setId !== id));
     navigate(`/`);
-    console.log(tasks);
-    console.log(sets);
   };
 
   return (
@@ -91,7 +116,13 @@ function App() {
                     onSubmit={(title, icon) =>
                       setSets([
                         ...sets,
-                        { id: maxSetId + 1, title, icon, tasks: 0 },
+                        {
+                          id: maxSetId + 1,
+                          title,
+                          icon,
+                          tasks: 0,
+                          tasksDone: 0,
+                        },
                       ])
                     }
                   />
@@ -111,7 +142,12 @@ function App() {
                     onSubmit={(id, title) => {
                       setTasks([
                         ...tasks,
-                        { taskId: maxTaskId + 1, setId: id, title },
+                        {
+                          taskId: maxTaskId + 1,
+                          setId: id,
+                          title,
+                          done: false,
+                        },
                       ]);
                       increaseTasks(id);
                     }}
@@ -125,6 +161,9 @@ function App() {
                       deleteTask(taskId, setId)
                     }
                     tasks={tasks}
+                    onMarkButton={(setId, markButton) =>
+                      markTask(setId, markButton)
+                    }
                   />
                 </GridItem>
               </>

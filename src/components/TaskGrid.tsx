@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom";
 
 interface Props {
   tasks: Task[];
+  onMarkButton: (setId: number, markButton: boolean) => void;
   onDeleteButton: (taskId: number, setId: number) => void;
 }
 
-const TaskGrid = ({ tasks, onDeleteButton }: Props) => {
+const TaskGrid = ({ tasks, onMarkButton, onDeleteButton }: Props) => {
   const { id } = useParams<{ id: string }>();
   const filteredTasks = id
     ? tasks.filter((task) => task.setId === parseInt(id))
@@ -19,7 +20,7 @@ const TaskGrid = ({ tasks, onDeleteButton }: Props) => {
       {filteredTasks.map((task, i) => (
         <TaskCard
           onDeleteButton={onDeleteButton}
-          onMarkButton={() => console.log("test")}
+          onMarkButton={onMarkButton}
           key={i}
           task={task}
         ></TaskCard>

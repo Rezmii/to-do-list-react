@@ -5,19 +5,25 @@ import {
   IoIosCheckmarkCircleOutline,
 } from "react-icons/io";
 import { Task } from "../App";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Props {
   task: Task;
-  onMarkButton: () => void;
+  onMarkButton: (taskId: number, markButton: boolean) => void;
   onDeleteButton: (taskId: number, setId: number) => void;
 }
 
 const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
-  const [markButton, setMarkButton] = useState(false);
+  const [markButton, setMarkButton] = useState(task.done);
+
+  useEffect(() => {
+    setMarkButton(task.done);
+  }, [task.done]);
 
   const handleMarkButton = () => {
-    setMarkButton(!markButton);
+    const newMarkButtonState = !markButton;
+    setMarkButton(newMarkButtonState);
+    onMarkButton(task.taskId, newMarkButtonState);
   };
 
   return (
