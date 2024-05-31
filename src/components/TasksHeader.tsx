@@ -5,13 +5,18 @@ import { IoArrowBack } from "react-icons/io5";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import TasksFormButton from "./TasksFormButton";
 
-interface SetDetailsProps {
+interface Props {
   sets: Set[];
-  onSubmit: (id: number, title: string) => void;
+  onSubmit: (
+    id: number,
+    title: string,
+    description: string,
+    deadline: Date
+  ) => void;
   onDeleteButton: (id: number) => void;
 }
 
-const TasksHeader = ({ sets, onSubmit, onDeleteButton }: SetDetailsProps) => {
+const TasksHeader = ({ sets, onSubmit, onDeleteButton }: Props) => {
   const { id } = useParams<{ id: string }>();
   const setId = id ? parseInt(id) : undefined;
   const set = setId ? sets.find((s) => s.id === setId) : undefined;
@@ -39,7 +44,11 @@ const TasksHeader = ({ sets, onSubmit, onDeleteButton }: SetDetailsProps) => {
         </Text>
       </Box>
       <HStack>
-        <TasksFormButton onSubmit={(id, title) => onSubmit(id, title)} />
+        <TasksFormButton
+          onSubmit={(id, title, description, deadline) =>
+            onSubmit(id, title, description, deadline)
+          }
+        />
         <Button
           leftIcon={<IoIosRemoveCircleOutline size={20} />}
           onClick={() => onDeleteButton(set.id)}

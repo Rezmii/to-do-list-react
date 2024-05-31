@@ -169,7 +169,7 @@ function App() {
               <>
                 <GridItem area="header">
                   <TasksHeader
-                    onSubmit={(id, title) => {
+                    onSubmit={(id, title, description, deadline) => {
                       setTasks([
                         ...tasks,
                         {
@@ -177,8 +177,8 @@ function App() {
                           setId: id,
                           title,
                           done: false,
-                          description: "xd",
-                          deadline: new Date(2024, 6, 6),
+                          description,
+                          deadline,
                         },
                       ]);
                       increaseTasks(id);
