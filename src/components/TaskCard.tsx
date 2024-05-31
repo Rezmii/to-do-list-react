@@ -43,6 +43,11 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
     onDeleteButton(task.taskId, task.setId);
   };
 
+  const sliceDate = (date: string) => {
+    const newDate = date.split(",")[0];
+    return newDate;
+  };
+
   return (
     <Card>
       <CardBody paddingX={3} paddingY={4}>
@@ -80,7 +85,7 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
             </AccordionButton>
             <AccordionPanel pb={4}>
               <Text fontSize="sm" fontWeight="bold" marginTop={2}>
-                31.05.2024
+                {sliceDate(task.deadline.toLocaleString())}
               </Text>
               <hr />
               <Text fontSize="sm">{task.description}</Text>

@@ -21,6 +21,7 @@ export interface Task {
   title: string;
   done: boolean;
   description: string;
+  deadline: Date;
 }
 
 function App() {
@@ -38,28 +39,32 @@ function App() {
       setId: 1,
       title: "Fitness1",
       done: false,
-      description: "sdadjaosd",
+      description: "abc",
+      deadline: new Date(2024, 6, 10),
     },
     {
       taskId: 2,
       setId: 1,
       title: "Fitness1",
       done: false,
-      description: "sdadjaosd",
+      description: "abc",
+      deadline: new Date(2024, 6, 16),
     },
     {
       taskId: 3,
       setId: 1,
       title: "Fitness1",
       done: false,
-      description: "sdadjaosd",
+      description: "abc",
+      deadline: new Date(2024, 7, 2),
     },
     {
       taskId: 4,
       setId: 2,
       title: "Fitness2",
       done: false,
-      description: "Sranie!",
+      description: "abc",
+      deadline: new Date(2024, 6, 12),
     },
   ]);
 
@@ -173,6 +178,7 @@ function App() {
                           title,
                           done: false,
                           description: "xd",
+                          deadline: new Date(2024, 6, 6),
                         },
                       ]);
                       increaseTasks(id);
