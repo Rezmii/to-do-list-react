@@ -27,43 +27,42 @@ export interface Task {
 function App() {
   const navigate = useNavigate();
   const [sets, setSets] = useState<Set[]>([
-    { id: 1, icon: "💪", title: "Fitness1", tasks: 3, tasksDone: 0 },
-    { id: 2, icon: "💪", title: "Fitness2", tasks: 1, tasksDone: 0 },
-    { id: 3, icon: "💪", title: "Fitness3", tasks: 0, tasksDone: 0 },
-    { id: 4, icon: "💪", title: "Fitness4", tasks: 0, tasksDone: 0 },
+    { id: 1, icon: "💪", title: "Fitness", tasks: 3, tasksDone: 0 },
+    { id: 2, icon: "📕", title: "Studying", tasks: 1, tasksDone: 0 },
+    { id: 3, icon: "🏡", title: "House Tasks", tasks: 0, tasksDone: 0 },
   ]);
 
   const [tasks, setTasks] = useState<Task[]>([
     {
       taskId: 1,
       setId: 1,
-      title: "Fitness1",
+      title: "Go to a gym",
       done: false,
-      description: "abc",
+      description: "Chest and back",
       deadline: new Date(2024, 6, 10),
     },
     {
       taskId: 2,
       setId: 1,
-      title: "Fitness1",
+      title: "Go for a run",
       done: false,
-      description: "abc",
+      description: "Atleast 3 km",
       deadline: new Date(2024, 6, 16),
     },
     {
       taskId: 3,
       setId: 1,
-      title: "Fitness1",
+      title: "Stretch",
       done: false,
-      description: "abc",
+      description: "Do a light stretch for back pain",
       deadline: new Date(2024, 7, 2),
     },
     {
       taskId: 4,
       setId: 2,
-      title: "Fitness2",
+      title: "Learn to math exam",
       done: false,
-      description: "abc",
+      description: "Need to know geometry and trigonometry",
       deadline: new Date(2024, 6, 12),
     },
   ]);

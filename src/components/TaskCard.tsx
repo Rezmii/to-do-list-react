@@ -56,7 +56,9 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
             <AccordionButton>
               <HStack width="100%" justifyContent="space-between">
                 <Box>
-                  <Text fontWeight="bold">{task.title}</Text>
+                  <Text fontWeight="bold" textAlign="left">
+                    {task.title}
+                  </Text>
                 </Box>
 
                 <Box display="flex" alignItems="center">
