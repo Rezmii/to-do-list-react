@@ -78,8 +78,8 @@ const TasksFormButton = ({ onSubmit }: Props) => {
   return (
     <>
       <VStack>
-        <Button onClick={onOpen} fontSize={20}>
-          <FaPlus />
+        <Button leftIcon={<FaPlus size={17} />} onClick={onOpen}>
+          Add a new task
         </Button>
       </VStack>
 
