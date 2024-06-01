@@ -17,6 +17,7 @@ import EmojiPickerModal from "./EmojiPickerModal";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
+import { FaPlus } from "react-icons/fa6";
 
 const schema = z.object({
   title: z.string().min(3, { message: "Title must be at least 3 characters." }),
@@ -60,10 +61,9 @@ const FormButton = ({ onSubmit }: Props) => {
 
   return (
     <>
-      <CiSquarePlus size={60} onClick={onOpen} />
-      <Text marginTop={-4} fontSize="sm">
-        Add a new set
-      </Text>
+      <Button leftIcon={<FaPlus size={17} />} onClick={onOpen}>
+        Add a new Set
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
