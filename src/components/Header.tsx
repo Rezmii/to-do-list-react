@@ -8,7 +8,7 @@ interface Props {
 const Header = ({ onSubmit }: Props) => {
   return (
     <HStack justifyContent="space-between">
-      <Text fontSize="4xl">Welcome</Text>
+      <Text fontSize="4xl">To Do List</Text>
       <VStack alignItems="flex-end">
         <FormButton onSubmit={(title, emoji) => onSubmit(title, emoji)} />
       </VStack>

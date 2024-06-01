@@ -12,7 +12,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { CiSquarePlus } from "react-icons/ci";
 import EmojiPickerModal from "./EmojiPickerModal";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
