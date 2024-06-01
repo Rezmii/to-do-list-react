@@ -2,7 +2,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import "./App.css";
 import Header from "./components/Header";
 import SetGrid from "./components/SetGrid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import TaskGrid from "./components/TaskGrid";
 import TasksHeader from "./components/TasksHeader";
@@ -26,50 +26,70 @@ export interface Task {
 
 function App() {
   const navigate = useNavigate();
-  const [sets, setSets] = useState<Set[]>([
-    { id: 1, icon: "💪", title: "Fitness", tasks: 3, tasksDone: 0 },
-    { id: 2, icon: "📕", title: "Studying", tasks: 1, tasksDone: 0 },
-    { id: 3, icon: "🏡", title: "House Tasks", tasks: 0, tasksDone: 0 },
-  ]);
 
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      taskId: 1,
-      setId: 1,
-      title: "Go to a gym",
-      done: false,
-      description: "Chest and back",
-      deadline: new Date(2024, 6, 10),
-    },
-    {
-      taskId: 2,
-      setId: 1,
-      title: "Go for a run",
-      done: false,
-      description: "Atleast 3 km",
-      deadline: new Date(2024, 6, 16),
-    },
-    {
-      taskId: 3,
-      setId: 1,
-      title: "Stretch",
-      done: false,
-      description: "Do a light stretch for back pain",
-      deadline: new Date(2024, 7, 2),
-    },
-    {
-      taskId: 4,
-      setId: 2,
-      title: "Learn to math exam",
-      done: false,
-      description: "Need to know geometry and trigonometry",
-      deadline: new Date(2024, 6, 12),
-    },
-  ]);
+  const initialSets = JSON.parse(localStorage.getItem("sets") || "[]");
+  const initialTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
+  const [sets, setSets] = useState<Set[]>(
+    initialSets.length
+      ? initialSets
+      : [
+          { id: 1, icon: "💪", title: "Fitness", tasks: 3, tasksDone: 1 },
+          { id: 2, icon: "📕", title: "Studying", tasks: 1, tasksDone: 0 },
+          { id: 3, icon: "🏡", title: "House Tasks", tasks: 0, tasksDone: 0 },
+        ]
+  );
+
+  const [tasks, setTasks] = useState<Task[]>(
+    initialTasks.length
+      ? initialTasks
+      : [
+          {
+            taskId: 1,
+            setId: 1,
+            title: "Go to a gym",
+            done: true,
+            description: "Chest and back",
+            deadline: new Date(2024, 6, 10),
+          },
+          {
+            taskId: 2,
+            setId: 1,
+            title: "Go for a run",
+            done: false,
+            description: "Atleast 3 km",
+            deadline: new Date(2024, 6, 16),
+          },
+          {
+            taskId: 3,
+            setId: 1,
+            title: "Stretch",
+            done: false,
+            description: "Do a light stretch for back pain",
+            deadline: new Date(2024, 7, 2),
+          },
+          {
+            taskId: 4,
+            setId: 2,
+            title: "Learn to math exam",
+            done: false,
+            description: "Need to know geometry and trigonometry",
+            deadline: new Date(2024, 6, 12),
+          },
+        ]
+  );
 
   const maxSetId = Math.max(...sets.map((set) => set.id));
   const maxTaskId =
     tasks.length > 0 ? Math.max(...tasks.map((task) => task.taskId)) : 0;
+
+  useEffect(() => {
+    localStorage.setItem("sets", JSON.stringify(sets));
+  }, [sets]);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const increaseTasks = (id: number) => {
     setSets(
