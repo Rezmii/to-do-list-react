@@ -1,4 +1,4 @@
-import { SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { Task } from "../App";
 import TaskCard from "./TaskCard";
 import { useParams } from "react-router-dom";
@@ -15,17 +15,27 @@ const TaskGrid = ({ tasks, onMarkButton, onDeleteButton }: Props) => {
     ? tasks.filter((task) => task.setId === parseInt(id))
     : [];
   if (filteredTasks.length === 0) return <Text>No tasks added.</Text>;
+
   return (
-    <SimpleGrid columns={{ sm: 1, md: 2, lg: 4, xl: 4 }} spacing={5}>
+    <Flex wrap="wrap" justifyContent="space-between">
       {filteredTasks.map((task, i) => (
-        <TaskCard
-          onDeleteButton={onDeleteButton}
-          onMarkButton={onMarkButton}
+        <Box
           key={i}
-          task={task}
-        ></TaskCard>
+          flexBasis={{
+            base: "100%",
+            md: "calc(50% - 10px)",
+            lg: "calc(25% - 10px)",
+          }}
+          marginBottom="20px"
+        >
+          <TaskCard
+            onDeleteButton={onDeleteButton}
+            onMarkButton={onMarkButton}
+            task={task}
+          />
+        </Box>
       ))}
-    </SimpleGrid>
+    </Flex>
   );
 };
 
