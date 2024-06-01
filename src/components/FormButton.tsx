@@ -85,12 +85,10 @@ const FormButton = ({ onSubmit }: Props) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
+              <Button mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button variant="ghost" type="submit">
-                Add
-              </Button>
+              <Button type="submit">Add</Button>
             </ModalFooter>
           </form>
         </ModalContent>

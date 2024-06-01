@@ -24,11 +24,13 @@ const EmojiPickerModal = ({ onEmojiClick, emoji }: Props) => {
 
   return (
     <>
-      <HStack>
+      <HStack alignItems="center">
         <Button marginTop={5} onClick={onOpen}>
           Add emoji
         </Button>
-        <Text fontSize="2xl">{emoji ? emoji : ""}</Text>
+        <Text marginTop={4} fontSize="2xl">
+          {emoji ? emoji : ""}
+        </Text>
       </HStack>
 
       <Modal isOpen={isOpen} onClose={onClose}>
