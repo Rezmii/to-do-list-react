@@ -12,6 +12,7 @@ import {
   Text,
   VStack,
   Textarea,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa6";
 import { z } from "zod";
@@ -51,6 +52,7 @@ interface Props {
 }
 
 const TasksFormButton = ({ onSubmit }: Props) => {
+  const [isBase] = useMediaQuery("(max-width: 30em)");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { id } = useParams<{ id: string | undefined }>();
@@ -78,8 +80,12 @@ const TasksFormButton = ({ onSubmit }: Props) => {
   return (
     <>
       <VStack>
-        <Button leftIcon={<FaPlus size={17} />} onClick={onOpen}>
-          Add a new task
+        <Button
+          leftIcon={isBase ? undefined : <FaPlus size={17} />}
+          onClick={onOpen}
+          size={{ base: "lg", md: "md" }}
+        >
+          {isBase ? <FaPlus /> : "Add a new task"}
         </Button>
       </VStack>
 

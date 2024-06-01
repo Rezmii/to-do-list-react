@@ -1,6 +1,14 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Set } from "../App";
-import { Box, Button, Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  HStack,
+  Text,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { IoArrowBack } from "react-icons/io5";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import TasksFormButton from "./TasksFormButton";
@@ -17,6 +25,7 @@ interface Props {
 }
 
 const TasksHeader = ({ sets, onSubmit, onDeleteButton }: Props) => {
+  const [isBase] = useMediaQuery("(max-width: 30em)");
   const { id } = useParams<{ id: string }>();
   const setId = id ? parseInt(id) : undefined;
   const set = setId ? sets.find((s) => s.id === setId) : undefined;
@@ -42,13 +51,14 @@ const TasksHeader = ({ sets, onSubmit, onDeleteButton }: Props) => {
           base: "center",
           lg: "space-between",
         }}
+        textAlign={{ base: "center", lg: "left" }}
       >
         <GridItem area="title">
           <Box display="flex" justifyContent="center">
-            <HStack>
+            <HStack spacing={3} alignItems="center">
               <Text fontSize="3xl">{set.icon}</Text>
               <Text fontSize="3xl">{set.title}</Text>
-              <Text>
+              <Text fontSize={{ base: "sm", md: "md" }} whiteSpace="nowrap">
                 {set.tasksDone}/
                 {set.tasks === 1
                   ? `${set.tasks} task done`
@@ -58,24 +68,28 @@ const TasksHeader = ({ sets, onSubmit, onDeleteButton }: Props) => {
           </Box>
         </GridItem>
         <GridItem area="buttons">
-          <HStack>
+          <HStack spacing={3} justifyContent="center">
             <TasksFormButton
               onSubmit={(id, title, description, deadline) =>
                 onSubmit(id, title, description, deadline)
               }
             />
             <Button
-              leftIcon={<IoIosRemoveCircleOutline size={20} />}
+              leftIcon={
+                isBase ? undefined : <IoIosRemoveCircleOutline size={20} />
+              }
               onClick={() => onDeleteButton(set.id)}
+              size={{ base: "lg", md: "md" }}
             >
-              Delete set
+              {isBase ? <IoIosRemoveCircleOutline /> : "Delete set"}
             </Button>
             <Button
-              leftIcon={<IoArrowBack />}
+              leftIcon={isBase ? undefined : <IoArrowBack />}
               variant="solid"
               onClick={handleClick}
+              size={{ base: "lg", md: "md" }}
             >
-              Go Back
+              {isBase ? <IoArrowBack /> : "Go Back"}
             </Button>
           </HStack>
         </GridItem>
