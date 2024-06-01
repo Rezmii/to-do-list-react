@@ -83,7 +83,7 @@ const TasksFormButton = ({ onSubmit }: Props) => {
         </Button>
       </VStack>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={["xs", "md"]}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add a new task</ModalHeader>

@@ -71,7 +71,7 @@ function App() {
           {
             taskId: 4,
             setId: 2,
-            title: "Learn to math exam",
+            title: "Study for math exam",
             done: false,
             description: "Need to know geometry and trigonometry",
             deadline: new Date(2024, 6, 12),

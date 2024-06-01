@@ -64,7 +64,7 @@ const FormButton = ({ onSubmit }: Props) => {
         Add a new Set
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size={["xs", "md"]}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add a new set</ModalHeader>

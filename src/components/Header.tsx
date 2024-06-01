@@ -1,4 +1,4 @@
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Grid, GridItem, Text } from "@chakra-ui/react";
 import FormButton from "./FormButton";
 
 interface Props {
@@ -7,12 +7,27 @@ interface Props {
 
 const Header = ({ onSubmit }: Props) => {
   return (
-    <HStack justifyContent="space-between">
-      <Text fontSize="4xl">To Do List</Text>
-      <VStack alignItems="flex-end">
-        <FormButton onSubmit={(title, emoji) => onSubmit(title, emoji)} />
-      </VStack>
-    </HStack>
+    <>
+      <Grid
+        templateAreas={{
+          base: `"title" "button"`,
+          sm: `"title button"`,
+        }}
+        gap={{ base: "1em", sm: "0" }}
+        alignItems="center"
+        justifyContent={{
+          base: "center",
+          sm: "space-between",
+        }}
+      >
+        <GridItem area="title">
+          <Text fontSize="4xl">To Do List</Text>
+        </GridItem>
+        <GridItem area="button">
+          <FormButton onSubmit={(title, emoji) => onSubmit(title, emoji)} />
+        </GridItem>
+      </Grid>
+    </>
   );
 };
 

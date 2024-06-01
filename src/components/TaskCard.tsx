@@ -44,8 +44,13 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
   };
 
   const sliceDate = (date: string) => {
-    const newDate = date.split(",")[0];
-    return newDate;
+    const newDate = new Date(date);
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    };
+    return newDate.toLocaleDateString(undefined, options);
   };
 
   return (
