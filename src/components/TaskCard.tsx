@@ -61,7 +61,12 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
             <AccordionButton>
               <HStack width="100%" justifyContent="space-between">
                 <Box>
-                  <Text fontWeight="bold" textAlign="left">
+                  <Text
+                    fontWeight="bold"
+                    textAlign="left"
+                    whiteSpace={{ base: "wrap", lg: "nowrap" }}
+                    textDecoration={markButton ? "line-through" : "none"}
+                  >
                     {task.title}
                   </Text>
                 </Box>
@@ -70,6 +75,7 @@ const TaskCard = ({ task, onMarkButton, onDeleteButton }: Props) => {
                   <Button
                     size="sm"
                     padding={2}
+                    marginLeft={1}
                     marginRight={2}
                     onClick={handleMarkButton}
                   >

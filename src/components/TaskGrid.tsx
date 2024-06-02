@@ -17,7 +17,7 @@ const TaskGrid = ({ tasks, onMarkButton, onDeleteButton }: Props) => {
   if (filteredTasks.length === 0) return <Text>No tasks added.</Text>;
 
   return (
-    <Flex wrap="wrap" justifyContent="space-between">
+    <Flex wrap="wrap" gap={3}>
       {filteredTasks.map((task, i) => (
         <Box
           key={i}
